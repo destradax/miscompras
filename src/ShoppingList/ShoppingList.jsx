@@ -33,7 +33,7 @@ const ShoppingList = () => {
 
   return (
     <>
-      <h1>Shopping list</h1>
+      <h1 className={styles.title}>My Shopping list</h1>
 
       <form onSubmit={handleSubmit} autoComplete="off">
         <input
@@ -42,6 +42,8 @@ const ShoppingList = () => {
           required
           name="itemName"
           autoComplete="false"
+          placeholder="Write an item and press enter"
+          className={styles.input}
         />
 
         <datalist id="items-for-list">
@@ -50,17 +52,22 @@ const ShoppingList = () => {
           ))}
         </datalist>
 
-        <br />
-
-        <button type="submit">Add</button>
+        <button type="submit" className={styles.submit}>
+          Add
+        </button>
       </form>
 
       {!!shoppingList.length && (
-        <ul>
+        <ul className={styles.list}>
           {shoppingList.map(i => (
             <li key={i} className={styles.listItem}>
               {i}
-              <button onClick={() => handleRemoveItem(i)}>Remove</button>
+              <button
+                onClick={() => handleRemoveItem(i)}
+                className={styles.remove}
+              >
+                ❌
+              </button>
             </li>
           ))}
         </ul>
