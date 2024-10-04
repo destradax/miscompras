@@ -7,15 +7,19 @@ const ShoppingList = () => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    const { itemName } = Object.fromEntries(new FormData(event.target));
+    const { itemName: rawName } = Object.fromEntries(
+      new FormData(event.target)
+    );
+
+    const itemName = rawName.trim();
+
+    if (!items.includes(itemName)) {
+      setItems(i => [...i, itemName]);
+    }
 
     if (shoppingList.includes(itemName)) {
       alert('Item already in list');
       return;
-    }
-
-    if (!items.includes(itemName)) {
-      setItems(i => [...i, itemName]);
     }
 
     event.target.reset();
@@ -31,8 +35,14 @@ const ShoppingList = () => {
     <>
       <h1>Shopping list</h1>
 
-      <form onSubmit={handleSubmit} autoComplete='off'>
-        <input type="text" list="items-for-list" required name="itemName" autoComplete="false"/>
+      <form onSubmit={handleSubmit} autoComplete="off">
+        <input
+          type="text"
+          list="items-for-list"
+          required
+          name="itemName"
+          autoComplete="false"
+        />
 
         <datalist id="items-for-list">
           {items.map(i => (
